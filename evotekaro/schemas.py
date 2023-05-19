@@ -41,7 +41,7 @@ class Election(BaseModel):
 
 
 class Votes(BaseModel):
-    id : int
+    # id : int
     userId : int
     electionId : int
     candidateId : int

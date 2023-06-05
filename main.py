@@ -2,8 +2,21 @@ from fastapi import FastAPI
 from evotekaro import  models
 from evotekaro.database import engine
 from evotekaro.routers import user, authentication, election, votes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000",  # Replace with the actual URL of your React app
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 models.Base.metadata.create_all(engine)
 

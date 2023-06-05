@@ -3,7 +3,6 @@ from pydantic import BaseModel
 import datetime
 
 
-
 class User(BaseModel):
     name:str
     email:str
@@ -46,7 +45,9 @@ class Votes(BaseModel):
     electionId : int
     candidateId : int
 
-
+class VoteResult(BaseModel):
+    candidateId: int
+    vote_count: int
 
 ## AUTHENTICATIONS
 

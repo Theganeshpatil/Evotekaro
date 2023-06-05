@@ -7,7 +7,7 @@ from evotekaro.hashing import Hash
 
 def create(request: schemas.User, db: Session):
     new_user = models.User(
-        name=request.name, email=request.email, password=Hash.bcrypt(request.password),department=request.department, batch=request.batch)
+        name=request.name, email=request.email, password=Hash.bcrypt(request.password),department=request.department, batch=request.batch, isAdmin = request.isAdmin)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

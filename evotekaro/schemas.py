@@ -9,6 +9,7 @@ class User(BaseModel):
     password:str
     department: str
     batch: int # this can't be anything other than 2021/22/23 need to restrict this
+    isAdmin: bool
 
 
 class ShowUser(BaseModel):
@@ -16,6 +17,7 @@ class ShowUser(BaseModel):
     email:str
     department: str
     batch: int 
+    isAdmin: bool
     class Config():
         orm_mode = True
 

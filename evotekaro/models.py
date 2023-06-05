@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
 from evotekaro.database import Base
 from sqlalchemy.orm import relationship
 
@@ -12,7 +12,9 @@ class User(Base):
     password = Column(String)
     department = Column(String)
     batch = Column(Integer)
+    isAdmin = Column(Boolean)
     candidates = relationship('Candidate', back_populates='user')
+    
 
 
 class Election(Base):

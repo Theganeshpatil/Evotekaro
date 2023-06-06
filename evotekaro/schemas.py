@@ -23,7 +23,7 @@ class ShowUser(BaseModel):
 
 
 class Candidates(BaseModel):
-    # id :int 
+    id :int 
     userId : int 
     electionId : int
     manisfesto : str

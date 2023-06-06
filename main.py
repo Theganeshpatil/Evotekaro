@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from evotekaro import  models
 from evotekaro.database import engine
-from evotekaro.routers import user, authentication, election, votes
+from evotekaro.routers import user, authentication, election, votes, candidates
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -24,3 +24,4 @@ app.include_router(authentication.router)
 app.include_router(user.router)
 app.include_router(election.router)
 app.include_router(votes.router)
+app.include_router(candidates.router)

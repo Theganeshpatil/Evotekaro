@@ -9,7 +9,7 @@ def get_all(db: Session):
 
 
 def create(request: schemas.Election, db: Session):
-    new_elec = models.Election(name=request.name, startTime=request.startTime,endTime=request.endTime)
+    new_elec = models.Election(name=request.name, startTime=request.startTime,endTime=request.endTime, rules=request.rules)
     db.add(new_elec)
     db.commit()
     db.refresh(new_elec)

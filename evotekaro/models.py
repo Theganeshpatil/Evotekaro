@@ -24,6 +24,7 @@ class Election(Base):
     name = Column(String)
     startTime = Column(Date)
     endTime = Column(Date)
+    rules = Column(String)
     candidates = relationship('Candidate', back_populates='election')
 
 

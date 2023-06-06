@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",  # Replace with the actual URL of your React app
+    "http://localhost:3000" # Replace with the actual URL of your React app
 ]
 
 app.add_middleware(

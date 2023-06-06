@@ -24,3 +24,15 @@ def verify_token(token: str, credentials_exception):
         token_data = schemas.TokenData(email=email)
     except JWTError:
         raise credentials_exception
+
+def verify_admin_token(token: str, credentials_exception):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        isAdmin: bool = payload.get("isAdmin")
+        if isAdmin is False:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception

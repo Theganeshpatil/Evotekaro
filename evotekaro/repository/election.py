@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
+import json
 
 
 def get_all(db: Session):
@@ -40,8 +41,6 @@ def destroy(id: int, db: Session):
 #     db.commit()
 #     return 'updated'
 
-
-import json
 
 def update(id: int, request: schemas.Election, db: Session):
     election = db.query(models.Election).filter(models.Election.id == id).first()

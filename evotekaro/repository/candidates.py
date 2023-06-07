@@ -24,3 +24,33 @@ def show(id: int, db: Session):
 
 def show_users(db: Session):
     return db.query(models.Candidate).all()
+
+
+def delete_candidate(id: int, db: Session):
+    candidate = db.query(models.Candidate).filter(models.Candidate.id == id)
+
+    if not candidate.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Candidate with id {id} not found")
+
+    candidate.delete(synchronize_session=False)
+    db.commit()
+    return 'Candidate Deleted'
+
+
+def update_candidate(id: int, request: schemas.Candidates, db: Session):
+    candidate = db.query(models.Candidate).filter(models.Candidate.id == id)
+
+    if not candidate.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"candidate with id {id} not found")
+
+    update_values = {
+            "userId": request.userId,
+            "electionId": request.electionId,
+            "manisfesto": request.manisfesto  
+    }
+
+    candidate.update(update_values)
+    db.commit()
+    return 'candidate details updated'

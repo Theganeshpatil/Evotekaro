@@ -47,13 +47,12 @@ def update_user(id: int, request: schemas.User, db: Session):
                             detail=f"User with id {id} not found")
 
     update_values = {
-       
         "name": request.name,
-  "email": request.email,
-  "password": request.password,
-  "department": request.department,
-  "batch": request.batch,
-  "isAdmin":request.isAdmin 
+        "email": request.email,
+        "password": request.password,
+        "department": request.department,
+        "batch": request.batch,
+        "isAdmin":request.isAdmin 
     }
 
     user.update(update_values)

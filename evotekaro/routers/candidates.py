@@ -25,3 +25,13 @@ def get_candidates(id: int, db: Session = Depends(get_db), current_user: schemas
 @router.get('/', response_model=List[schemas.Candidates])
 def show_candidates(db:Session=Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
     return candidates.show_users(db)
+
+
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+def destroy(id: int, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+    return candidates.delete_candidate(id, db)
+
+
+@router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
+def update(id: int, request: schemas.Candidates, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+    return candidates.update_candidate(id, request, db)

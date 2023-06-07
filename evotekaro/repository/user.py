@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 from evotekaro.hashing import Hash
+import json
 
 
 def create(request: schemas.User, db: Session):
@@ -45,6 +46,16 @@ def update_user(id: int, request: schemas.User, db: Session):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id {id} not found")
 
-    user.update(request)
+    update_values = {
+       
+        "name": request.name,
+  "email": request.email,
+  "password": request.password,
+  "department": request.department,
+  "batch": request.batch,
+  "isAdmin":request.isAdmin 
+    }
+
+    user.update(update_values)
     db.commit()
     return 'User details updated'

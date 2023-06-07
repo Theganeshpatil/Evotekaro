@@ -22,6 +22,17 @@ def create_user(request: schemas.User, db: Session = Depends(get_db), current_us
 def get_user(id: int, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_admin_user)):
     return user.show(id, db)
 
+
 @router.get('/', response_model=List[schemas.ShowUser])
 def show_users(db:Session=Depends(get_db), current_user: schemas.User = Depends(oauth2.get_admin_user)):
     return user.show_users(db)
+
+
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+def destroy(id: int, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_admin_user)):
+    return user.delete_user(id, db)
+
+
+@router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
+def update(id: int, request: schemas.User, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_admin_user)):
+    return user.update_user(id, request, db)

@@ -24,3 +24,27 @@ def show(id: int, db: Session):
 
 def show_users(db: Session):
     return db.query(models.User).all()
+
+
+def delete_user(id: int, db: Session):
+    user = db.query(models.User).filter(models.User.id == id)
+
+    if not user.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"User with id {id} not found")
+
+    user.delete(synchronize_session=False)
+    db.commit()
+    return 'User Deleted'
+
+
+def update_user(id: int, request: schemas.User, db: Session):
+    user = db.query(models.User).filter(models.User.id == id)
+
+    if not user.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"User with id {id} not found")
+
+    user.update(request)
+    db.commit()
+    return 'User details updated'

@@ -22,6 +22,7 @@ def verify_token(token: str, credentials_exception):
         if email is None:
             raise credentials_exception
         token_data = schemas.TokenData(email=email)
+        return payload.get('userId')
     except JWTError:
         raise credentials_exception
 
@@ -34,5 +35,7 @@ def verify_admin_token(token: str, credentials_exception):
         isAdmin: bool = payload.get("isAdmin")
         if isAdmin is False:
             raise credentials_exception
+        return payload.get('userId')
     except JWTError:
         raise credentials_exception
+    

@@ -7,7 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000" # Replace with the actual URL of your React app
+    "http://localhost:3000","http://localhost:3001",
+    "http://localhost"
 ]
 
 app.add_middleware(
@@ -19,6 +20,10 @@ app.add_middleware(
 )
 
 models.Base.metadata.create_all(engine)
+
+@app.get('/')
+def Home():
+    return "Evotekaro - Secure Voting System | go to `/docs` for api documentation"
 
 app.include_router(authentication.router)
 app.include_router(user.router)

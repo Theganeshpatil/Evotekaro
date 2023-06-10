@@ -1,9 +1,7 @@
-
 from sqlalchemy.orm import Session
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 from evotekaro.hashing import Hash
-import json
 
 
 def create(request: schemas.User, db: Session):

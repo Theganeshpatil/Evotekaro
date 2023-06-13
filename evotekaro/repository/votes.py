@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
@@ -13,14 +13,40 @@ def get_all(db: Session):
     return [schemas.Votes(**vote.__dict__) for vote in votes]
 
 
-
 def create(request: schemas.Votes, db: Session):
-    new_vote = models.Votes(userId=request.userId, electionId=request.electionId,candidateId=request.candidateId)
+    # Check if the user exists
+    user = db.query(models.User).filter(models.User.id == request.userId).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Check if the election exists
+    election = db.query(models.Election).filter(models.Election.id == request.electionId).first()
+    if not election:
+        raise HTTPException(status_code=404, detail="Election not found")
+
+    # Check if the candidate exists
+    candidate = db.query(models.Candidate).filter(models.Candidate.id == request.candidateId).first()
+    if not candidate:
+        raise HTTPException(status_code=404, detail="Candidate not found")
+
+    # Check if the user has already voted for this election
+    existing_vote = db.query(models.Votes).filter(
+        models.Votes.userId == request.userId,
+        models.Votes.electionId == request.electionId
+    ).first()
+
+    if existing_vote:
+        raise HTTPException(status_code=400, detail="User has already voted for this election")
+
+    new_vote = models.Votes(
+        userId=request.userId,
+        electionId=request.electionId,
+        candidateId=request.candidateId
+    )
     db.add(new_vote)
     db.commit()
     db.refresh(new_vote)
     return new_vote
-
 ## not ideal to delete a vote
 ## no need to update a vote also
 

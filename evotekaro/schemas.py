@@ -27,9 +27,13 @@ class Candidates(BaseModel):
     id :int 
     name : str 
     electionId : int
-    manisfesto : str
+    manifesto : str
     class Config():
         orm_mode = True
+
+class AddCandidates(Candidates):
+    name: str
+    manifesto:str
     
 
 class Election(BaseModel):
@@ -38,7 +42,7 @@ class Election(BaseModel):
     startTime : dt
     endTime : dt
     rules: str
-    candidates : List[Candidates] = []
+    candidates : List[AddCandidates] = []
     class Config():
         orm_mode = True
 

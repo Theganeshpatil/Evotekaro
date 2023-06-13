@@ -1,4 +1,3 @@
-
 from sqlalchemy.orm import Session
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
@@ -6,8 +5,12 @@ from evotekaro.hashing import Hash
 
 
 def create(request: schemas.Candidates, db: Session):
+    # Check if the election exists
+    election = db.query(models.Election).filter(models.Election.id == request.electionId).first()
+    if not election:
+        raise HTTPException(status_code=404, detail="Election not found")
     new_candidate = models.Candidate(
-        name=request.name, electionId=request.electionId,manisfesto=request.manisfesto)
+        name=request.name, electionId=request.electionId,manifesto=request.manifesto)
     db.add(new_candidate)
     db.commit()
     db.refresh(new_candidate)
@@ -48,7 +51,7 @@ def update_candidate(id: int, request: schemas.Candidates, db: Session):
     update_values = {
             "name": request.name,
             "electionId": request.electionId,
-            "manisfesto": request.manisfesto  
+            "manifesto": request.manifesto  
     }
 
     candidate.update(update_values)

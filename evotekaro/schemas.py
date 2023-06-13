@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel
-import datetime
+from datetime import datetime as dt
 
 
 class User(BaseModel):
@@ -25,7 +25,7 @@ class ShowUser(BaseModel):
 
 class Candidates(BaseModel):
     id :int 
-    userId : int 
+    name : str 
     electionId : int
     manisfesto : str
     class Config():
@@ -35,8 +35,8 @@ class Candidates(BaseModel):
 class Election(BaseModel):
     id :int
     name : str
-    startTime : datetime.date
-    endTime : datetime.date
+    startTime : dt
+    endTime : dt
     rules: str
     candidates : List[Candidates] = []
     class Config():

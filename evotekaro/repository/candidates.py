@@ -7,7 +7,7 @@ from evotekaro.hashing import Hash
 
 def create(request: schemas.Candidates, db: Session):
     new_candidate = models.Candidate(
-        userId=request.userId, electionId=request.electionId,manisfesto=request.manisfesto)
+        name=request.name, electionId=request.electionId,manisfesto=request.manisfesto)
     db.add(new_candidate)
     db.commit()
     db.refresh(new_candidate)
@@ -46,7 +46,7 @@ def update_candidate(id: int, request: schemas.Candidates, db: Session):
                             detail=f"candidate with id {id} not found")
 
     update_values = {
-            "userId": request.userId,
+            "name": request.name,
             "electionId": request.electionId,
             "manisfesto": request.manisfesto  
     }

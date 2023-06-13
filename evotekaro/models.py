@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
 from evotekaro.database import Base
 from sqlalchemy.orm import relationship
 
@@ -13,7 +13,7 @@ class User(Base):
     department = Column(String)
     batch = Column(Integer)
     isAdmin = Column(Boolean)
-    candidates = relationship('Candidate', back_populates='user')
+    # candidates = relationship('Candidate', back_populates='user')
     
 
 
@@ -22,8 +22,8 @@ class Election(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    startTime = Column(Date)
-    endTime = Column(Date)
+    startTime = Column(DateTime)
+    endTime = Column(DateTime)
     rules = Column(String)
     candidates = relationship('Candidate', back_populates='election')
 
@@ -32,10 +32,11 @@ class Candidate(Base):
     __tablename__ = 'candidates'
 
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey('users.id'))
+    name = Column(String)
+    # userId = Column(Integer, ForeignKey('users.id'))
     electionId = Column(Integer, ForeignKey('elections.id'))
     manisfesto = Column(String)
-    user = relationship('User', back_populates='candidates')
+    # user = relationship('User', back_populates='candidates')
     election = relationship('Election', back_populates='candidates')
 
 class Votes(Base):

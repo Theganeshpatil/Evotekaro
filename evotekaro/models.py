@@ -35,7 +35,7 @@ class Candidate(Base):
     name = Column(String)
     # userId = Column(Integer, ForeignKey('users.id'))
     electionId = Column(Integer, ForeignKey('elections.id'))
-    manisfesto = Column(String)
+    manifesto = Column(String)
     # user = relationship('User', back_populates='candidates')
     election = relationship('Election', back_populates='candidates')
 

@@ -8,13 +8,26 @@ def get_all(db: Session):
     election = db.query(models.Election).all()
     return election
 
-
 def create(request: schemas.Election, db: Session):
-    new_elec = models.Election(name=request.name, startTime=request.startTime,endTime=request.endTime, rules=request.rules)
+    new_elec = models.Election(
+        name=request.name,
+        startTime=request.startTime,
+        endTime=request.endTime,
+        rules=request.rules
+    )
+    for candidate_data in request.candidates:
+        candidate = models.Candidate(
+            name=candidate_data.name,
+            electionId=new_elec.id,
+            manifesto=candidate_data.manifesto
+        )
+        new_elec.candidates.append(candidate)
+    print(new_elec)
     db.add(new_elec)
     db.commit()
     db.refresh(new_elec)
     return new_elec
+
 
 
 def destroy(id: int, db: Session):

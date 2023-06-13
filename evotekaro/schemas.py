@@ -13,6 +13,7 @@ class User(BaseModel):
 
 
 class ShowUser(BaseModel):
+    id: int
     name:str
     email:str
     department: str

@@ -19,11 +19,11 @@ def create_candidate(request: schemas.Candidates, db: Session = Depends(get_db),
 
 
 @router.get('/{id}', response_model=schemas.Candidates)
-def get_candidates(id: int, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+def get_candidates(id: int, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
     return candidates.show(id, db)
 
 @router.get('/', response_model=List[schemas.Candidates])
-def show_candidates(db:Session=Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+def show_candidates(db:Session=Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
     return candidates.show_users(db)
 
 

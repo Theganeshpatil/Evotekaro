@@ -31,7 +31,9 @@ def delete_user(id: int, db: Session):
     if not user.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id {id} not found")
-
+    if id == 1 :
+        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                            detail=f"Keep the admin user in your app")
     user.delete(synchronize_session=False)
     db.commit()
     return 'User Deleted'

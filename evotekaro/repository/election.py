@@ -22,11 +22,11 @@ def create(request: schemas.Election, db: Session):
             manifesto=candidate_data.manifesto
         )
         new_elec.candidates.append(candidate)
-    print(new_elec)
     db.add(new_elec)
     db.commit()
     db.refresh(new_elec)
-    return new_elec
+    election = db.query(models.Election).filter(models.Election.id == new_elec.id).first()
+    return election
 
 
 

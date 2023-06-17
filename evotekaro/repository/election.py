@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 import json
@@ -36,6 +36,11 @@ def destroy(id: int, db: Session):
     if not election.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"election with id {id} not found")
+
+    candidates = db.query(models.Candidate).options(joinedload(models.Candidate.election)).filter(models.Candidate.electionId == id).all()
+
+    for candidate in candidates:
+        db.delete(candidate)
 
     election.delete(synchronize_session=False)
     db.commit()

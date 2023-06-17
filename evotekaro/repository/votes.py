@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import func
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
-
+from datetime import datetime
 
 # def get_all(db: Session):
 #     votes = db.query(models.Votes).all()
@@ -51,8 +51,18 @@ def create(request: schemas.Votes, db: Session):
 ## no need to update a vote also
 
 
+from datetime import datetime
+
 def show_result(id: int, db: Session):
-    ## get a result count of max voters and return it here
+    election = db.query(models.Election).get(id)
+    
+    if not election:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Election with id {id} not found")
+    
+    current_time = datetime.now()
+    if current_time < election.endTime:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Election results are not available yet")
+    
     results = (
         db.query(models.Votes.candidateId, func.count(models.Votes.candidateId).label("vote_count"))
         .filter(models.Votes.electionId == id)

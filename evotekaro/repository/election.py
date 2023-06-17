@@ -47,19 +47,6 @@ def destroy(id: int, db: Session):
     return 'Deleted'
 
 
-# def update(id: int, request: schemas.Election, db: Session):
-#     election = db.query(models.Election).filter(models.Election.id == id)
-
-#     if not election.first():
-#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-#                             detail=f"Election with id {id} not found")
-    
-#     update_elec = models.Election(name=request.name, startTime=request.startTime,endTime=request.endTime)
-#     election.update(update_elec)
-#     db.commit()
-#     return 'updated'
-
-
 def update(id: int, request: schemas.Election, db: Session):
     election = db.query(models.Election).filter(models.Election.id == id).first()
 
@@ -74,13 +61,25 @@ def update(id: int, request: schemas.Election, db: Session):
     }
 
     if request.candidates:
-        update_values["candidates"] = json.dumps(request.candidates)
+        candidates_data = []
+        for candidate_data in request.candidates:
+            candidate = {
+                "name": candidate_data.name,
+                "electionId": id,
+                "manifesto": candidate_data.manifesto
+            }
+            candidates_data.append(candidate)
+
+        # Update candidates separately
+        db.query(models.Candidate).filter(models.Candidate.electionId == id).delete()
+        for candidate_data in candidates_data:
+            candidate = models.Candidate(**candidate_data)
+            db.add(candidate)
 
     db.query(models.Election).filter(models.Election.id == id).update(update_values)
     db.commit()
 
     return 'updated'
-
 
 
 

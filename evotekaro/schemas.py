@@ -42,6 +42,9 @@ class Election(BaseModel):
     startTime : dt
     endTime : dt
     rules: str
+    year: str  # 2021, 2022, 2023, 2024, all
+    branch: str # bcy, bcs, bec, bcd, all
+    batch: str # 1, 2, 3, all
     candidates : List[AddCandidates] = []
     class Config():
         orm_mode = True

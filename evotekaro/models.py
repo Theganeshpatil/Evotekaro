@@ -25,6 +25,9 @@ class Election(Base):
     startTime = Column(DateTime)
     endTime = Column(DateTime)
     rules = Column(String)
+    year = Column(String)
+    branch = Column(String)
+    batch = Column(String)
     candidates = relationship('Candidate', back_populates='election')
 
 

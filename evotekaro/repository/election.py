@@ -13,7 +13,10 @@ def create(request: schemas.Election, db: Session):
         name=request.name,
         startTime=request.startTime,
         endTime=request.endTime,
-        rules=request.rules
+        rules=request.rules,
+        branch = request.branch,
+        batch= request.batch,
+        year = request.year
     )
     for candidate_data in request.candidates:
         candidate = models.Candidate(
@@ -58,6 +61,10 @@ def update(id: int, request: schemas.Election, db: Session):
         "name": request.name,
         "startTime": request.startTime,
         "endTime": request.endTime,
+        "rules":request.rules,
+        "branch" : request.branch,
+        "batch": request.batch,
+        "year" :request.year
     }
 
     if request.candidates:

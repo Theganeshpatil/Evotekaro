@@ -20,6 +20,7 @@ class ShowUser(BaseModel):
     department: str
     batch: int 
     isAdmin: bool
+    year: int
     class Config():
         orm_mode = True
 

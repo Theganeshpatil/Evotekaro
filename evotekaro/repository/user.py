@@ -1,15 +1,17 @@
 from sqlalchemy.orm import Session
-from evotekaro import models, schemas
+from evotekaro import models, schemas, email
 from fastapi import HTTPException, status
 from evotekaro.hashing import Hash
 
-
 def create(request: schemas.User, db: Session):
     new_user = models.User(
-        name=request.name, email=request.email, password=Hash.bcrypt(request.password),department=request.department, batch=request.batch, isAdmin = request.isAdmin)
+        name=request.name, email=request.email, password=Hash.bcrypt(request.password),department=request.department, batch=request.batch, isAdmin = request.isAdmin, year = request.year)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+
+    email.login_details(new_user.email, new_user.name, request.password)
+
     return new_user
 
 
@@ -52,7 +54,8 @@ def update_user(id: int, request: schemas.User, db: Session):
         "password": request.password,
         "department": request.department,
         "batch": request.batch,
-        "isAdmin":request.isAdmin 
+        "isAdmin":request.isAdmin,
+        "year": request.year
     }
 
     user.update(update_values)

@@ -8,8 +8,9 @@ class User(BaseModel):
     email:str
     password:str
     department: str
-    batch: int # this can't be anything other than 2021/22/23 need to restrict this
+    year: int # this can't be anything other than 2021/22/23 need to restrict this
     isAdmin: bool
+    batch: int # batch 1,2,3
 
 
 class ShowUser(BaseModel):

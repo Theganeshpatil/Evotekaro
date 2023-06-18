@@ -12,6 +12,7 @@ class User(Base):
     password = Column(String)
     department = Column(String)
     batch = Column(Integer)
+    year = Column(Integer)
     isAdmin = Column(Boolean)
     # candidates = relationship('Candidate', back_populates='user')
     

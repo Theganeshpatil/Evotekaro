@@ -51,8 +51,6 @@ def create(request: schemas.Votes, db: Session):
 ## no need to update a vote also
 
 
-from datetime import datetime
-
 def show_result(id: int, db: Session):
     election = db.query(models.Election).get(id)
     
@@ -64,11 +62,17 @@ def show_result(id: int, db: Session):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Election results are not available yet")
     
     results = (
-        db.query(models.Votes.candidateId, func.count(models.Votes.candidateId).label("vote_count"))
+        db.query(
+            models.Votes.candidateId,
+            models.Candidate.name,
+            func.count(models.Votes.candidateId).label("vote_count")
+        )
+        .join(models.Candidate, models.Candidate.id == models.Votes.candidateId)
         .filter(models.Votes.electionId == id)
-        .group_by(models.Votes.candidateId)
+        .group_by(models.Votes.candidateId, models.Candidate.name)
         .order_by(func.count(models.Votes.candidateId).desc())
         .all()
     )
 
-    return [{"candidateId": result[0], "vote_count": result[1]} for result in results]
+    return [{"candidateId": result[0], "candidateName": result[1], "vote_count": result[2]} for result in results]
+

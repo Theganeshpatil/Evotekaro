@@ -60,6 +60,7 @@ class Votes(BaseModel):
 
 class VoteResult(BaseModel):
     candidateId: int
+    candidateName: str
     vote_count: int
 
 ## AUTHENTICATIONS

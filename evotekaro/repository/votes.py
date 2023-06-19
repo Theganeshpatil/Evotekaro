@@ -73,6 +73,6 @@ def show_result(id: int, db: Session):
         .order_by(func.count(models.Votes.candidateId).desc())
         .all()
     )
-
+    print(results)
     return [{"candidateId": result[0], "candidateName": result[1], "vote_count": result[2]} for result in results]
 

@@ -13,10 +13,10 @@ def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(
         models.User.email == request.username).first()
     
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail=f"Invalid Credentials")
     if not Hash.verify(user.password, request.password):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail=f"Incorrect password")
 
     access_token = token.create_access_token(data={"sub": user.email, "userId":user.id, "isAdmin": user.isAdmin, "batch": str(user.batch), "branch":user.department, "year": str(user.year)})

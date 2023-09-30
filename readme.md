@@ -23,3 +23,10 @@ password: `pass`
 3. `POST` - /user
 4. `DELETE` - /user
 5. `PUT` - /user
+
+# Highlights
+
+1. Email integration for user notification on account creation
+2. Maintains logs
+3. Using neon for online postgresql database
+4.

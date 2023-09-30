@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from evotekaro import  models
 from evotekaro.database import engine
 from evotekaro.routers import user, authentication, election, votes, candidates

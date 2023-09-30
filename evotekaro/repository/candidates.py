@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 from evotekaro.hashing import Hash
-
+import logging
 
 def create(request: schemas.Candidates, db: Session):
     # Check if the election exists
@@ -14,6 +14,7 @@ def create(request: schemas.Candidates, db: Session):
     db.add(new_candidate)
     db.commit()
     db.refresh(new_candidate)
+    logging.info(f"New candidate created with id {new_candidate.id} - {new_candidate.name}")
     return new_candidate
 
 
@@ -38,6 +39,7 @@ def delete_candidate(id: int, db: Session):
 
     candidate.delete(synchronize_session=False)
     db.commit()
+    logging.info(f"Candidate with id {id} deleted - {candidate.first().name}")
     return 'Candidate Deleted'
 
 
@@ -56,4 +58,5 @@ def update_candidate(id: int, request: schemas.Candidates, db: Session):
 
     candidate.update(update_values)
     db.commit()
+    logging.info(f"Candidate with id {id} updated - {candidate.first().name}")
     return 'candidate details updated'

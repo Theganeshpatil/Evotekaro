@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 from evotekaro import models, schemas, email
 from fastapi import HTTPException, status
 from evotekaro.hashing import Hash
+import logging
+
 
 def create(request: schemas.User, db: Session):
     new_user = models.User(
@@ -11,7 +13,7 @@ def create(request: schemas.User, db: Session):
     db.refresh(new_user)
 
     email.login_details(new_user.email, new_user.name, request.password)
-
+    logging.info(f"New user created with id {new_user.id} - {new_user.name}")
     return new_user
 
 
@@ -38,6 +40,7 @@ def delete_user(id: int, db: Session):
                             detail=f"Keep the admin user in your app")
     user.delete(synchronize_session=False)
     db.commit()
+    logging.info(f"User with id {id} deleted - {user.first().name}")
     return 'User Deleted'
 
 
@@ -60,4 +63,5 @@ def update_user(id: int, request: schemas.User, db: Session):
 
     user.update(update_values)
     db.commit()
+    logging.info(f"User with id {id} updated - {user.first().name}")
     return 'User details updated'

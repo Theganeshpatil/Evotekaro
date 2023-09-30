@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session, joinedload
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 import json
+import logging
 
 
 def get_all(db: Session):
@@ -29,6 +30,7 @@ def create(request: schemas.Election, db: Session):
     db.commit()
     db.refresh(new_elec)
     election = db.query(models.Election).filter(models.Election.id == new_elec.id).first()
+    logging.info(f"New election created with id {new_elec.id} - {election.name}")
     return election
 
 
@@ -47,6 +49,7 @@ def destroy(id: int, db: Session):
 
     election.delete(synchronize_session=False)
     db.commit()
+    logging.info(f"election with id {id} deleted - {election.first().name}")
     return 'Deleted'
 
 
@@ -85,7 +88,7 @@ def update(id: int, request: schemas.Election, db: Session):
 
     db.query(models.Election).filter(models.Election.id == id).update(update_values)
     db.commit()
-
+    logging.info(f"Election with id {id} updated - {election.name}")
     return 'updated'
 
 

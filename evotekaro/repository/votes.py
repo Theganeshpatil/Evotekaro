@@ -3,6 +3,8 @@ from sqlalchemy import func
 from evotekaro import models, schemas
 from fastapi import HTTPException, status
 from datetime import datetime
+import logging
+
 
 # def get_all(db: Session):
 #     votes = db.query(models.Votes).all()
@@ -13,7 +15,8 @@ def get_all(db: Session):
     return [schemas.Votes(**vote.__dict__) for vote in votes]
 
 
-def create(request: schemas.Votes, db: Session):
+def create(request: schemas.Votes, db: Session, current_user: schemas.ShowUser):
+
     # Check if the user exists
     user = db.query(models.User).filter(models.User.id == request.userId).first()
     if not user:
@@ -38,6 +41,11 @@ def create(request: schemas.Votes, db: Session):
     if existing_vote:
         raise HTTPException(status_code=400, detail="User has already voted for this election")
 
+    # Check if user is trying to vote as different user
+    if current_user != request.userId:
+        logging.critical(f"User with id {current_user} is trying to vote for user {user.name}")
+        raise HTTPException(status_code=403, detail="User can only vote for themselves")
+    
     new_vote = models.Votes(
         userId=request.userId,
         electionId=request.electionId,
@@ -46,6 +54,7 @@ def create(request: schemas.Votes, db: Session):
     db.add(new_vote)
     db.commit()
     db.refresh(new_vote)
+    logging.info(f"New vote created with id {new_vote.id} by user {user.name} for candidate {candidate.name} in election {election.name}")
     return new_vote
 ## not ideal to delete a vote
 ## no need to update a vote also

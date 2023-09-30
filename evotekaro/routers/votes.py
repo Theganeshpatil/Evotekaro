@@ -19,9 +19,9 @@ get_db = database.get_db
 
 @router.post('/', status_code=status.HTTP_201_CREATED,)
 def create(request: schemas.Votes, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
-    return votes.create(request, db)
+    return votes.create(request, db, current_user)
 
 
-@router.get('/{id}', status_code=200, response_model=List[schemas.VoteResult])
-def show_result(id: int, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
-    return votes.show_result(id, db)
+@router.get('/{election_id}', status_code=200, response_model=List[schemas.VoteResult])
+def show_result(election_id: int, db: Session = Depends(get_db), current_user: schemas.User = Depends(oauth2.get_current_user)):
+    return votes.show_result(election_id, db)

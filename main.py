@@ -3,7 +3,11 @@ from evotekaro import  models
 from evotekaro.database import engine
 from evotekaro.routers import user, authentication, election, votes, candidates
 from fastapi.middleware.cors import CORSMiddleware
+import logging
 
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s',
+                    filename='app.log')
 app = FastAPI()
 
 origins = [

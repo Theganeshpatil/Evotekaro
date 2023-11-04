@@ -12,7 +12,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000","http://localhost:3001",
-    "http://localhost", "https://evotekaro.vercel.app"
+    "http://localhost", "https://evotekaro.vercel.app",
+    "evotekaro-theganeshpatil.vercel.app", "evotekaro-git-main-theganeshpatil.vercel.app"
 ]
 
 app.add_middleware(

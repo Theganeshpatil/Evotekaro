@@ -52,13 +52,12 @@ export const Voting = ({ electionId }) => {
   };
 
   useEffect(() => {
-    k.map((i) => {
+    k.forEach((i) => {
       if (i.name === electionId) {
         setcan(i.candidates);
       }
     });
-    return;
-  });
+  }, [electionId, k]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/election`, {

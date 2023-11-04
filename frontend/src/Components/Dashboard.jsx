@@ -5,13 +5,14 @@ import CreateElection from "./CreateElection";
 import "../Assets/css/Dashboard.css";
 import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
+import API_BASE_URL from "../config";
 
 export const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
   const [d, setd] = useState([]);
   const decoded = jwt_decode(localStorage.getItem("SavedToken"));
 
   useEffect(() => {
-    fetch("http://localhost:8000/election", {
+    fetch(`${API_BASE_URL}/election/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,16 +26,23 @@ export const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
-        console.log(data);
         setd(data);
-        console.log(data);
-        console.log(decoded);
       })
       .catch((error) => {
         console.log("Error", error);
       });
   }, []);
+
+  function shouldRenderElection(item, decoded) {
+    return (
+      item.batch === "all" ||
+      item.batch === decoded.batch ||
+      item.year === "all" ||
+      item.year === decoded.year ||
+      item.branch === "all" ||
+      item.branch === decoded.branch
+    );
+  }
 
   return (
     <div className="bg-image">
@@ -42,150 +50,24 @@ export const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
         <Sidebar change={onFormSwitch}></Sidebar>
       </div>
       <div className="view-section">
-        <p className="sumo-text">
-          <center>E VOTEKARO</center>
-        </p>
+        <p className="sumo-text">EvoteKaro</p>
 
         <div className="cards-list">
-          {d.map((item) => {
-            if (
-              (item.batch === "all") &
-              (item.year === "all") &
-              (item.branch === "all")
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === "all") &
-              (item.year === "all") &
-              (item.branch === decoded.branch)
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === "all") &
-              (item.year === decoded.year) &
-              (item.branch === "all")
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === decoded.batch) &
-              (item.year === "all") &
-              (item.branch === "all")
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === decoded.batch) &
-              (item.year === decoded.year) &
-              (item.branch === "all")
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === "all") &
-              (item.year === decoded.year) &
-              (item.branch === decoded.branch)
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === decoded.batch) &
-              (item.year === "all") &
-              (item.branch === decoded.branch)
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            } else if (
-              (item.batch === decoded.branch) &
-              (item.year === decoded.year) &
-              (item.branch === decoded.branch)
-            ) {
-              return (
-                <CreateElection
-                  title={item.name}
-                  rule={item.rules}
-                  onFormSwitch={onFormSwitch}
-                  setElectionId={setElectionId}
-                  start={item.startTime}
-                  end={item.endTime}
-                  seteId={seteId}
-                  id={item.id}
-                ></CreateElection>
-              );
-            }
-          })}
+          {d.map((item) =>
+            shouldRenderElection(item, decoded) ? (
+              <CreateElection
+                title={item.name}
+                rule={item.rules}
+                onFormSwitch={onFormSwitch}
+                setElectionId={setElectionId}
+                start={item.startTime}
+                end={item.endTime}
+                seteId={seteId}
+                id={item.id}
+                key={item.id}
+              />
+            ) : null
+          )}
         </div>
         <div className="about_container">
           <p className="about_text">About :</p>

@@ -4,12 +4,13 @@ import { useState } from "react";
 import "../Assets/css/Dashboard.css";
 import ShowElection from "./ShowElection";
 import Side from "./Side";
+import API_BASE_URL from "../config";
 
 export const All = ({ setElectionId, seteId }) => {
   const [d, setd] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/election", {
+    fetch(`${API_BASE_URL}/election/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,10 +24,7 @@ export const All = ({ setElectionId, seteId }) => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
-        console.log(data);
         setd(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log("Error", error);
@@ -40,13 +38,14 @@ export const All = ({ setElectionId, seteId }) => {
       </div>
       <div className="view-section">
         <div className="sumo-text">
-          <p>E VOTEKARO</p>
+          <p>EvoteKaro</p>
         </div>
 
         <div className="cards-list">
           {d.map((item) => {
             return (
               <ShowElection
+                key={item.id}
                 title={item.name}
                 batch={item.batch}
                 year={item.year}

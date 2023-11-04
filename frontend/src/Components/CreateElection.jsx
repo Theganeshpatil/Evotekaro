@@ -24,10 +24,8 @@ function CreateElection({
     {
       if (currentDateTime > end) {
         navigate("/results");
-        console.log("Past");
       } else if (currentDateTime > start && currentDateTime < end) {
         navigate("/voting");
-        console.log("Ongoing");
       }
     }
   };
@@ -35,7 +33,7 @@ function CreateElection({
   return (
     <div className="card 1" onClick={vote}>
       <div className="card_image">
-        <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+        <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
       </div>
       <div className="card_title title_white">
         <p>{title}</p>

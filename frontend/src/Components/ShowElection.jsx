@@ -8,7 +8,7 @@ function ShowElection({ title, batch, branch, year }) {
     <div className="card 1">
       <div className="card_image">
         {" "}
-        <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+        <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
       </div>
       <div className="card_title title-white">{title}</div>
       <Popup

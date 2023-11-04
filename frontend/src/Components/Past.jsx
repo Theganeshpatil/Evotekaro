@@ -26,7 +26,6 @@ export const Past = ({ setElectionId, seteId }) => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
         console.log(data);
         setd(data);
       })
@@ -35,151 +34,42 @@ export const Past = ({ setElectionId, seteId }) => {
       });
   }, []);
 
+  function shouldRenderElection(item, decoded) {
+    return (
+      (item.batch === "all" || item.batch === decoded.batch) &&
+      (item.year === "all" || item.year === decoded.year) &&
+      (item.branch === "all" || item.branch === decoded.branch)
+    );
+  }
+
   return (
     <div className="bg-image">
       <div className="side">
         <Sidebar></Sidebar>
       </div>
       <div className="view-section">
-        <p className="sumo-text">
-          <center>E VOTEKARO</center>
-        </p>
+        <p className="sumo-text">EvoteKaro</p>
 
         <div className="cards-list">
           {d.map((item) => {
-            if (currentDateTime > item.endTime) {
-              {
-                if (
-                  (item.batch === "all") &
-                  (item.year === "all") &
-                  (item.branch === "all")
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === "all") &
-                  (item.year === "all") &
-                  (item.branch === decoded.branch)
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === "all") &
-                  (item.year === decoded.year) &
-                  (item.branch === "all")
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === decoded.batch) &
-                  (item.year === "all") &
-                  (item.branch === "all")
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === decoded.batch) &
-                  (item.year === decoded.year) &
-                  (item.branch === "all")
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === "all") &
-                  (item.year === decoded.year) &
-                  (item.branch === decoded.branch)
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === decoded.batch) &
-                  (item.year === "all") &
-                  (item.branch === decoded.branch)
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                } else if (
-                  (item.batch === decoded.branch) &
-                  (item.year === decoded.year) &
-                  (item.branch === decoded.branch)
-                ) {
-                  return (
-                    <CreateElection
-                      title={item.name}
-                      rule={item.rules}
-                      setElectionId={setElectionId}
-                      start={item.startTime}
-                      end={item.endTime}
-                      seteId={seteId}
-                      id={item.id}
-                    ></CreateElection>
-                  );
-                }
-              }
+            if (
+              currentDateTime > item.endTime &&
+              shouldRenderElection(item, decoded)
+            ) {
+              return (
+                <CreateElection
+                  title={item.name}
+                  rule={item.rules}
+                  setElectionId={setElectionId}
+                  start={item.startTime}
+                  end={item.endTime}
+                  seteId={seteId}
+                  id={item.id}
+                  key={item.id}
+                />
+              );
             }
+            return null;
           })}
         </div>
       </div>

@@ -26,9 +26,7 @@ export const User = () => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
         seta(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log("Error", error);
@@ -48,9 +46,7 @@ export const User = () => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
         setc(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log("Error", error);
@@ -70,7 +66,6 @@ export const User = () => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
         sete(data);
       })
       .catch((error) => {
@@ -91,7 +86,6 @@ export const User = () => {
         return response.json();
       })
       .then((data) => {
-        // react componants here
         setv(data);
       })
       .catch((error) => {
@@ -106,57 +100,55 @@ export const User = () => {
       </div>
       <div className="view-section">
         <div className="sumo-text">
-          <p>
-            E VOTEKARO {"("}Admin{")"}{" "}
-          </p>
+          <p>EvoteKaro (admin)</p>
         </div>
         <div className="cards-list">
-          <div class="card 1">
-            <div class="card_image">
+          <div className="card 1">
+            <div className="card_image">
               {" "}
-              <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+              <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
             </div>
             <div className="number">
               <>{a.length}</>
             </div>
-            <div class="card_title title-white">
+            <div className="card_title title-white">
               <p>Number of Voters</p>
             </div>
           </div>
 
-          <div class="card 1">
-            <div class="card_image">
+          <div className="card 1">
+            <div className="card_image">
               {" "}
-              <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+              <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
             </div>
             <div className="number">
               <>{c.length}</>
             </div>
-            <div class="card_title title-white">
+            <div className="card_title title-white">
               <p>Candidates</p>
             </div>
           </div>
-          <div class="card 1">
-            <div class="card_image">
+          <div className="card 1">
+            <div className="card_image">
               {" "}
-              <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+              <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
             </div>
             <div className="number">
               <>{v.length}</>
             </div>
-            <div class="card_title title-white">
+            <div className="card_title title-white">
               <p>Vote Count</p>
             </div>
           </div>
-          <div class="card 1">
-            <div class="card_image">
+          <div className="card 1">
+            <div className="card_image">
               {" "}
-              <img src="https://i.redd.it/b3esnz5ra34y.jpg" />
+              <img src="https://i.redd.it/b3esnz5ra34y.jpg" alt="bg" />
             </div>
             <div className="number">
               <>{e.length}</>
             </div>
-            <div class="card_title title-white">
+            <div className="card_title title-white">
               <p>Election Count</p>
             </div>
           </div>

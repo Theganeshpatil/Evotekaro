@@ -3,6 +3,7 @@ import "../Assets/css/Conduct.css";
 import Side from "./Side";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 function Conduct({ onFormSwitch }) {
   const [state, setState] = useState({});
@@ -17,8 +18,6 @@ function Conduct({ onFormSwitch }) {
 
   const handleCandidateDelete = (id) => {
     setCandidate((prevData) => prevData.filter((item) => item.id !== id));
-    console.log("candidate:");
-    console.log(candidate);
   };
 
   const handleStartTimeChange = (e) => {
@@ -46,28 +45,18 @@ function Conduct({ onFormSwitch }) {
     setState({ id: 1, name: "", electionId: 1, manifesto: "" });
   };
 
-  var url = "http://127.0.0.1:8000/election/";
-
   const headers = {
     accept: "application/json",
     Authorization: localStorage.getItem("SavedToken"),
     "Content-Type": "application/json",
   };
-  const [data, setData] = useState({
-    electionName: "",
-    year: "",
-    branch: "",
-    batch: "",
-    candidate: "",
-    rules: "",
-    startTime: "",
-    endTime: "",
-  });
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     if (startTime && endTime) {
       const formattedStartTime = new Date(startTime).toISOString();
@@ -75,7 +64,7 @@ function Conduct({ onFormSwitch }) {
 
       axios
         .post(
-          "http://127.0.0.1:8000/election/",
+          `${API_BASE_URL}/election/`,
           {
             id: 1,
             name: data.electionName,
@@ -90,8 +79,7 @@ function Conduct({ onFormSwitch }) {
           { headers }
         )
         .then((res) => {
-          console.log(res);
-          if (res.request.staus == 200) {
+          if (res.request.staus === 200) {
           }
         });
     }

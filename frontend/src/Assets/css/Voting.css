@@ -1,0 +1,94 @@
+.a {
+    float: right;
+}
+
+.candidates{
+    margin-left: 23%;
+    padding-top: 5%;
+}
+
+.election-name{
+    background-color: #FFD369;
+    font-size: xxx-large;
+    width:fit-content;
+    padding: 10px;
+    font-family:Arial, Helvetica, sans-serif;
+    border-radius: 15px;
+}
+
+.Voting{
+    width: 56% ;
+    padding: 16px;
+    margin-top: 10%;
+    border-radius: 13px;
+    height: fit-content;
+    border: 3px solid black;
+    border-radius: 10px;
+
+
+}
+
+.candid{
+    padding: 2%;
+    
+}
+
+.votebut{
+    float: right;
+    padding: 3.5px;
+    width:fit-content;
+    font-size: x-large;
+    margin-right: 2%;
+    border-color: #FFD369;
+    background-color: white;
+    color: gray;
+    border-radius: 30%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+.votebu{
+    float: right;
+    padding: 3.5px;
+    width:fit-content;
+    font-size: x-large;
+    margin-right: 2%;
+    border-color: #FFD369;
+    background-color: white;
+    color: black;
+    border-radius: 30%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+.votebu:hover{
+    background-color: #FFD369;
+    border-color: black;
+    color: black;
+}
+
+
+
+.name{
+    font-size: xx-large;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 5px;
+
+
+}
+
+.sub{
+    margin-top: 10%;
+    background-color: #FFD369;
+    font-size: xx-large;
+    width:fit-content;
+    padding: 6px;
+    font-family:Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    text-shadow: 10ch;
+}
+.sub:hover{
+    background-color: #FFD369;
+    border-color: gray;
+    color: white;
+}

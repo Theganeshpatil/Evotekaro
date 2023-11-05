@@ -2,12 +2,11 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import CreateElection from "./CreateElection";
-import "../Assets/css/Dashboard.css";
-import Sidebar from "./Sidebar";
+import Sidebar from "../User/Sidebar";
 import jwt_decode from "jwt-decode";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
-export const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
+const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
   const [d, setd] = useState([]);
   const decoded = jwt_decode(localStorage.getItem("SavedToken"));
 
@@ -76,3 +75,5 @@ export const Dashboard = ({ onFormSwitch, setElectionId, seteId }) => {
     </div>
   );
 };
+
+export default Dashboard;

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../Assets/css/Past.css";
 import Sidebar from "./Sidebar";
-import CreateElection from "./CreateElection";
+import CreateElection from "../AdminPages/CreateElection";
 import jwt_decode from "jwt-decode";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
 export const Past = ({ setElectionId, seteId }) => {
   const [d, setd] = useState([]);

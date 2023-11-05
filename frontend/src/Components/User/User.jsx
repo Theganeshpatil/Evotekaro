@@ -1,9 +1,8 @@
 import React from "react";
-import Side from "./Side";
-import "../Assets/css/user.css";
+import Side from "../AdminPages/Sidebar";
 import { useState } from "react";
 import { useEffect } from "react";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
 export const User = () => {
   const [a, seta] = useState("");

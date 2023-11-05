@@ -3,9 +3,8 @@ import { nanoid } from "nanoid";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
 import { v4 as uuid } from "uuid";
-import Side from "./Side";
-import "../Assets/css/U.css";
-import API_BASE_URL from "../config";
+import Side from "./Sidebar";
+import API_BASE_URL from "../../config";
 
 export const U = () => {
   const [contacts, setContacts] = useState([]);
@@ -267,7 +266,7 @@ export const U = () => {
             </thead>
             <tbody>
               {contacts.map((contact) => (
-                <Fragment>
+                <Fragment key={contact.id}>
                   {editContactId === contact.id ? ( // if editcontactid is equal to contact id then we can edit editable row else it will be readonly row ie, can't edit
                     <EditableRow //we can't wrap editablerow in form tag because a form can't be child of tbodyt
                       editFormData={editFormData}

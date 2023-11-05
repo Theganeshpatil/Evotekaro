@@ -1,106 +1,53 @@
-import React, { useState } from "react";
+// App.js
+
+import React, { useState } from 'react';
 import { Login } from "./Components/Login";
 import { Forgot } from "./Components/Forgot";
-import { First } from "./Components/First"
-import { Dashboard } from "./Components/Dashboard"
+import Home from "./Components/Home";
+import { Dashboard } from "./Components/AdminPages/Dashboard";
 import { Add } from "./Components/Add";
-import Conduct from "./Components/Conduct";
-import { Past } from "./Components/Past";
-import { Vote } from "./Components/Vote";
-import { Faq } from "./Components/Faq"
-import { User } from "./Components/User";
+import Conduct from "./Components/AdminPages/Conduct";
+import { Past } from "./Components/User/PastElections";
+import { Vote } from "./Components/AdminPages/Vote";
+import { Faq } from "./Components/User/Help";
+import { User } from "./Components/User/User";
 import './App.css';
-import { Voting } from "./Components/Voting";
-import { U } from "./Components/u";
-import { Results } from "./Components/Results";
-import { All } from "./Components/All";
+import { Voting } from "./Components/User/Voting";
+import { U } from "./Components/AdminPages/u";
+import { Results } from "./Components/User/Results";
+import { All } from "./Components/AdminPages/All";
+import Admin from "./Components/Admin";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import Route from './Route';
+import NotFound from "./NotFound";
 
 function App() {
 
-  const [electionId, setElectionId] = useState("")
-  const [eId, seteId] = useState("")
+  const [electionId, setElectionId] = useState("");
+  const [eId, seteId] = useState("");
 
   return (
-    <React.Fragment>
-      <Router>
-        <Routes>
-          <Route path="/" element={
-            <React.Fragment>
-              <First />
-            </React.Fragment>
-          } />
-          <Route path="/login" element={
-            <React.Fragment>
-              <Login />
-            </React.Fragment>
-          } />
-          <Route path="/forgot" element={
-            <React.Fragment>
-              <Forgot />
-            </React.Fragment>
-          } />
-          <Route path="/dashboard" element={
-            <React.Fragment>
-              <Dashboard setElectionId={setElectionId} seteId={seteId} />
-            </React.Fragment>
-          } />
-          <Route path="/faq" element={
-            <React.Fragment>
-              <Faq />
-            </React.Fragment>
-          } />
-          <Route path="/add" element={
-            <React.Fragment>
-              <Add />
-            </React.Fragment>
-          } />
-          <Route path="/conduct" element={
-            <React.Fragment>
-              <Conduct />
-            </React.Fragment>
-          } />
-          <Route path="/user" element={
-            <React.Fragment>
-              <User />
-            </React.Fragment>
-          } />
-          <Route path="/p" element={
-            <React.Fragment>
-              <Past setElectionId={setElectionId} seteId={seteId} />
-            </React.Fragment>
-          } />
-          <Route path="/vote" element={
-            <React.Fragment>
-              <Vote setElectionId={setElectionId} seteId={seteId} />
-            </React.Fragment>
-          } />
-          <Route path="/voting" element={
-            <React.Fragment>
-              <Voting setElectionId={setElectionId} />
-            </React.Fragment>
-          } />
-          <Route path="/u" element={
-            <React.Fragment>
-              <U />
-            </React.Fragment>
-          } />
-          <Route path="/results" element={
-            <React.Fragment>
-              <Results setElectionId={setElectionId} seteId={seteId} />
-            </React.Fragment>
-          } />
-          <Route path="/all" element={
-            <React.Fragment>
-              <All setElectionId={setElectionId} seteId={seteId} />
-            </React.Fragment>
-          } />
-        </Routes>
-      </Router>
-    </React.Fragment>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/*" element={<NotFound />} />
+        <Route path='/admin' element={<Admin />} />
+        {/* <Route path='/admin' element={<Dashboard setElectionId={setElectionId} seteId={seteId} />} /> */}
+        {/* <Route path="/dashboard" element={<Dashboard setElectionId={setElectionId} seteId={seteId} />} />
+        <Route path="/p" element={<Past setElectionId={setElectionId} seteId={seteId} />} />
+        <Route path="/vote" element={<Vote setElectionId={setElectionId} seteId={seteId} />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/all" element={<All setElectionId={setElectionId} seteId={seteId} />} />
+        <Route path="/u" element={<U />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/voting" element={<Voting />} />
+        <Route path="/results" element={<Results electionId={electionId} eId={eId} />} /> */}
+      </Routes>
+    </Router>
+  );
 }
-
-
 
 export default App;

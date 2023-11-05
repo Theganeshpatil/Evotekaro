@@ -6,10 +6,10 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="logo_details">
-        <div className="logo_name">E VoteKaro</div>
+        <div className="logo_name">EvoteKaro</div>
       </div>
       <ul className="nav-list">
-        <li onClick={() => navigate("/dashboard")}>
+        <li onClick={() => navigate("/home")}>
           <button>
             <i className="bx bx-user"></i>
             <span className="link_name">Home</span>

@@ -6,7 +6,7 @@ import { ReactComponent as Q } from "../Assets/images/faq.svg";
 import { ReactComponent as Logout } from "../Assets/images/logout.svg";
 import { useNavigate } from "react-router-dom";
 
-export const Add = () => {
+const Add = () => {
   const navigate = useNavigate();
   return (
     <div className="App">
@@ -70,3 +70,5 @@ export const Add = () => {
     </div>
   );
 };
+
+export default Add;

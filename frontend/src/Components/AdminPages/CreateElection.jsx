@@ -1,7 +1,6 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import "../Assets/css/Election.css";
 import { useNavigate } from "react-router-dom";
 
 function CreateElection({
@@ -20,7 +19,6 @@ function CreateElection({
     console.log("clicked");
     setElectionId(title);
     seteId(id);
-    // eslint-disable-next-line
     {
       if (currentDateTime > end) {
         navigate("/results");

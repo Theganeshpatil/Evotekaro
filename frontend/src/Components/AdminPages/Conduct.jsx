@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import "../Assets/css/Conduct.css";
-import Side from "./Side";
+import Side from "./Sidebar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
 function Conduct({ onFormSwitch }) {
   const [state, setState] = useState({});

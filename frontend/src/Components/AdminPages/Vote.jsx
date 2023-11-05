@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./Sidebar";
-import "../Assets/css/Vote.css";
+import Sidebar from "../User/Sidebar";
 import CreateElection from "./CreateElection";
 import jwt_decode from "jwt-decode";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
-export const Vote = ({ setElectionId, seteId }) => {
+const Vote = ({ setElectionId, seteId }) => {
   const [d, setd] = useState([]);
 
   const currentDateTime = new Date().toISOString();
@@ -76,3 +75,5 @@ export const Vote = ({ setElectionId, seteId }) => {
     </div>
   );
 };
+
+export default Vote;

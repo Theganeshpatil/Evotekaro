@@ -1,6 +1,6 @@
 import React from "react";
-import pencil from "../Assets/images/pencil.png";
-import bin from "../Assets/images/bin.png";
+import pencil from "../../Assets/images/pencil.png";
+import bin from "../../Assets/images/bin.png";
 
 const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick }) => {
   return (

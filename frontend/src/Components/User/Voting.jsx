@@ -1,10 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import "../Assets/css/Voting.css";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
 export const Voting = ({ electionId }) => {
   const [k, setk] = useState([]);

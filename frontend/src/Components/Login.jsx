@@ -6,6 +6,7 @@ import API_BASE_URL from "../config";
 export const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,22 +18,24 @@ export const Login = (props) => {
     loginData.append("username", username);
     loginData.append("password", password);
 
+    setLoading(true);
     fetch(`${API_BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // eslint-disable-next-line
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: loginData,
     })
       .then((response) => {
+        setLoading(false);
         if (!response.ok) {
           throw new Error("Login request failed");
         }
         return response.json();
       })
       .then((data) => {
+        setLoading(false);
         console.log("Login successful:", data);
         // checking for a given jwt token has admin access if yes forwart it to admin portal
         const token = data.access_token;
@@ -40,9 +43,9 @@ export const Login = (props) => {
         // store it in localstorege
         localStorage.setItem("SavedToken", "Bearer " + token);
         if (decoded.isAdmin) {
-          navigate("/user");
+          navigate("/admin");
         } else {
-          navigate("/dashboard");
+          navigate("/user");
         }
         // else to normal user portal
       })
@@ -52,6 +55,10 @@ export const Login = (props) => {
       });
   };
 
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
   return (
     <div className="body">
       <div className="container">
@@ -59,7 +66,7 @@ export const Login = (props) => {
           <div className="front">
             <img
               src="https://images.shiksha.com/mediadata/images/1664006919phpGRGiBf_1280x960.png"
-              alt=""
+              alt="bg-img"
             />
             <div className="text">
               <span className="text-1">
@@ -103,7 +110,7 @@ export const Login = (props) => {
                   {/* <div className="text">
                     <a>Forgot password?</a>
                   </div> */}
-                  <div className="button input-box">
+                  <div className="button input-box" id="SubmitBtn">
                     <input
                       type="submit"
                       value="Sumbit"

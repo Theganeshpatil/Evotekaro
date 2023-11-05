@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../Assets/css/Faq.css";
 import Sidebar from "./Sidebar";
 
 const faqData = [

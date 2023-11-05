@@ -1,8 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import "../Assets/css/Voting.css";
-import API_BASE_URL from "../config";
+import API_BASE_URL from "../../config";
 
 export const Results = ({ electionId, eId }) => {
   const [v, setv] = useState([]);

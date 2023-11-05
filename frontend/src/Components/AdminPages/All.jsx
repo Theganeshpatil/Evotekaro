@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import "../Assets/css/Dashboard.css";
-import ShowElection from "./ShowElection";
-import Side from "./Side";
-import API_BASE_URL from "../config";
+import ShowElection from "../User/ShowElection";
+import Side from "./Sidebar";
+import API_BASE_URL from "../../config";
 
 export const All = ({ setElectionId, seteId }) => {
   const [d, setd] = useState([]);

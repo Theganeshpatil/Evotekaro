@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
-from evotekaro.database import Base
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+
+from evotekaro.database import Base
 
 
 class User(Base):
@@ -52,3 +53,12 @@ class Votes(Base):
     candidateId = Column(Integer, ForeignKey('candidates.id'))
 
 
+
+
+class AuditLog(Base):
+    __tablename__ = 'audit_logs'
+
+    id = Column(Integer, primary_key=True, index=True)
+    action = Column(String)
+    timestamp = Column(DateTime)
+    user_id = Column(Integer, nullable=True) # Optional link

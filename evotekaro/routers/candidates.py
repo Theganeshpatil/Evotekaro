@@ -1,9 +1,9 @@
-from fastapi import APIRouter
-from evotekaro import database, schemas, models, oauth2
-from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
+
+from evotekaro import database, oauth2, schemas
 from evotekaro.repository import candidates
-from typing import List
 
 router = APIRouter(
     prefix="/candidates",
@@ -14,24 +14,24 @@ get_db = database.get_db
 
 
 @router.post('/', response_model=schemas.Candidates)
-def create_candidate(request: schemas.Candidates, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
-    return candidates.create(request, db)
+async def create_candidate(request: schemas.Candidates, db: AsyncSession = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+    return await candidates.create(request, db)
 
 
 @router.get('/{id}', response_model=schemas.Candidates)
-def get_candidates(id: int, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
-    return candidates.show(id, db)
+async def get_candidates(id: int, db: AsyncSession = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
+    return await candidates.show(id, db)
 
-@router.get('/', response_model=List[schemas.Candidates])
-def show_candidates(db:Session=Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
-    return candidates.show_users(db)
+@router.get('/', response_model=list[schemas.Candidates])
+async def show_candidates(db: AsyncSession=Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_current_user)):
+    return await candidates.show_users(db)
 
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
-def destroy(id: int, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
-    return candidates.delete_candidate(id, db)
+async def destroy(id: int, db: AsyncSession = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+    return await candidates.delete_candidate(id, db)
 
 
 @router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
-def update(id: int, request: schemas.Candidates, db: Session = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
-    return candidates.update_candidate(id, request, db)
+async def update(id: int, request: schemas.Candidates, db: AsyncSession = Depends(get_db), current_user: schemas.Candidates = Depends(oauth2.get_admin_user)):
+    return await candidates.update_candidate(id, request, db)

@@ -1,6 +1,6 @@
-from typing import List, Optional
-from pydantic import BaseModel
 from datetime import datetime as dt
+
+from pydantic import BaseModel
 
 
 class User(BaseModel):
@@ -21,8 +21,8 @@ class ShowUser(BaseModel):
     batch: int 
     isAdmin: bool
     year: int
-    class Config():
-        orm_mode = True
+    class Config:
+        from_attributes = True
 
 
 class Candidates(BaseModel):
@@ -30,8 +30,8 @@ class Candidates(BaseModel):
     name : str 
     electionId : int
     manifesto : str
-    class Config():
-        orm_mode = True
+    class Config:
+        from_attributes = True
 
 class AddCandidates(Candidates):
     name: str
@@ -47,9 +47,9 @@ class Election(BaseModel):
     year: str  # 2021, 2022, 2023, 2024, all
     branch: str # bcy, bcs, bec, bcd, all
     batch: str # 1, 2, 3, all
-    candidates : List[AddCandidates] = []
-    class Config():
-        orm_mode = True
+    candidates : list[AddCandidates] = []
+    class Config:
+        from_attributes = True
 
 
 class Votes(BaseModel):
@@ -76,4 +76,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    email: Optional[str] = None
+    email: str | None = None

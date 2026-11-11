@@ -1,8 +1,11 @@
-from datetime import datetime, timedelta
-from jose import JWTError, jwt
-from evotekaro import schemas
-from dotenv.main import load_dotenv
 import os
+from datetime import datetime, timedelta
+
+from dotenv.main import load_dotenv
+from jose import JWTError, jwt
+
+from evotekaro import schemas
+
 load_dotenv()
 
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")

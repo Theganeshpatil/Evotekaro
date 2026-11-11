@@ -1,34 +1,36 @@
-from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import func
-from evotekaro import models, schemas
-from fastapi import HTTPException, status
-from datetime import datetime
+from sqlalchemy.ext.asyncio import AsyncSession
 import logging
+from datetime import datetime
 
+from fastapi import HTTPException, status
+from sqlalchemy import func
+from sqlalchemy.future import select
 
-# def get_all(db: Session):
-#     votes = db.query(models.Votes).all()
+from evotekaro import models, schemas
+
+# def get_all(db: AsyncSession):
+#     votes = (await db.execute(select(models.Votes))).scalars().all()
 #     return votes
 
-def get_all(db: Session):
-    votes = db.query(models.Votes).all()
+async def get_all(db: AsyncSession):
+    votes = (await db.execute(select(models.Votes))).scalars().all()
     return [schemas.Votes(**vote.__dict__) for vote in votes]
 
 
-def create(request: schemas.Votes, db: Session, current_user: schemas.ShowUser):
+async def create(request: schemas.Votes, db: AsyncSession, current_user: schemas.ShowUser):
 
     # Check if the user exists
-    user = db.query(models.User).filter(models.User.id == request.userId).first()
+    user = (await db.execute(select(models.User).filter(models.User.id == request.userId))).scalars().first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
     # Check if the election exists
-    election = db.query(models.Election).filter(models.Election.id == request.electionId).first()
+    election = (await db.execute(select(models.Election).filter(models.Election.id == request.electionId))).scalars().first()
     if not election:
         raise HTTPException(status_code=404, detail="Election not found")
 
     # Check if the candidate exists
-    candidate = db.query(models.Candidate).filter(models.Candidate.id == request.candidateId).first()
+    candidate = (await db.execute(select(models.Candidate).filter(models.Candidate.id == request.candidateId))).scalars().first()
     if not candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
 
@@ -52,15 +54,15 @@ def create(request: schemas.Votes, db: Session, current_user: schemas.ShowUser):
         candidateId=request.candidateId
     )
     db.add(new_vote)
-    db.commit()
-    db.refresh(new_vote)
+    await db.commit()
+    await db.refresh(new_vote)
     logging.info(f"New vote created with id {new_vote.id} by user {user.name} for candidate {candidate.name} in election {election.name}")
     return new_vote
 ## not ideal to delete a vote
 ## no need to update a vote also
 
 
-def show_result(id: int, db: Session):
+async def show_result(id: int, db: AsyncSession):
     election = db.query(models.Election).get(id)
     
     if not election:

@@ -1,8 +1,7 @@
-from sqlalchemy.future import select
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import Session
+from sqlalchemy.future import select
 
 from evotekaro import database, models, schemas, token
 from evotekaro.hashing import Hash

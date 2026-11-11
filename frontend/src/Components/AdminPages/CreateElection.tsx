@@ -20,12 +20,10 @@ export default function CreateElection({
     console.log("clicked");
     setElectionId(title);
     seteId(id);
-    {
-      if (currentDateTime > end) {
-        navigate("/results");
-      } else if (currentDateTime > start && currentDateTime < end) {
-        navigate("/voting");
-      }
+    if (currentDateTime > end) {
+      navigate("/results");
+    } else if (currentDateTime > start && currentDateTime < end) {
+      navigate("/voting");
     }
   };
 

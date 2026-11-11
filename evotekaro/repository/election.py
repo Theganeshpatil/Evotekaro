@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 
 from fastapi import HTTPException, status
-from sqlalchemy import update
+
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 

@@ -1,16 +1,14 @@
+import logging
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from evotekaro import models
+from evotekaro.database import engine
+from evotekaro.routers import authentication, candidates, election, user, votes
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
 limiter = Limiter(key_func=get_remote_address)
-import logging
-
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from evotekaro import models
-from evotekaro.database import engine
-from evotekaro.routers import authentication, candidates, election, user, votes
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s: %(message)s',

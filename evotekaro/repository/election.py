@@ -1,7 +1,8 @@
 import logging
 
+logger = logging.getLogger(__name__)
+
 from fastapi import HTTPException, status
-from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
@@ -34,7 +35,7 @@ async def create(request: schemas.Election, db: AsyncSession):
     await db.commit()
     await db.refresh(new_elec)
     election = (await db.execute(select(models.Election).filter(models.Election.id == new_elec.id))).scalars().first()
-    logging.info(f"New election created with id {new_elec.id} - {election.name}")
+    logger.info(f"New election created with id {new_elec.id} - {election.name}")
     return election
 
 
@@ -52,9 +53,8 @@ async def destroy(id: int, db: AsyncSession):
     for candidate in candidates:
         db.delete(candidate)
 
-    election
     await db.commit()
-    logging.info(f"election with id {id} deleted - {election.first().name}")
+    logger.info(f"election with id {id} deleted - {election.first().name}")
     return 'Deleted'
 
 
@@ -93,7 +93,7 @@ async def update(id: int, request: schemas.Election, db: AsyncSession):
 
     db.query(models.Election).filter(models.Election.id == id).update(update_values)
     await db.commit()
-    logging.info(f"Election with id {id} updated - {election.name}")
+    logger.info(f"Election with id {id} updated - {election.name}")
     return 'updated'
 
 

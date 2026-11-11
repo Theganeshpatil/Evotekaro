@@ -6,7 +6,7 @@ import logging
 
 
 def get_all(db: Session):
-    election = db.query(models.Election).all()
+    election = db.query(models.Election).options(joinedload(models.Election.candidates)).all()
     return election
 
 def create(request: schemas.Election, db: Session):

@@ -1,6 +1,8 @@
 import logging
 import os
 import smtplib
+
+logger = logging.getLogger(__name__)
 from email.mime.text import MIMEText
 
 from dotenv.main import load_dotenv
@@ -30,7 +32,7 @@ def login_details(to_email: str, username: str, password: str):
             # server.starttls()
             server.login(smtp_username, smtp_password)
             server.sendmail(from_email, to_email, email.as_string())
-        logging.info(f"Email sent successfully to {to_email}")
+        logger.info(f"Email sent successfully to {to_email}")
     except smtplib.SMTPException as e:
         print("An error occurred while sending the email:", str(e))
-        logging.error(f"An error occurred while sending the email: {e!s}")
+        logger.error(f"An error occurred while sending the email: {e!s}")

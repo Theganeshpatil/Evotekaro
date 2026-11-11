@@ -1,7 +1,5 @@
 import logging
 
-logger = logging.getLogger(__name__)
-
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -18,7 +16,7 @@ async def create(request: schemas.User, db: AsyncSession):
     await db.refresh(new_user)
 
     email.login_details(new_user.email, new_user.name, request.password)
-    logger.info(f"New user created with id {new_user.id} - {new_user.name}")
+    logging.info(f"New user created with id {new_user.id} - {new_user.name}")
     return new_user
 
 
@@ -44,8 +42,9 @@ async def delete_user(id: int, db: AsyncSession):
     if id == 1 :
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                             detail="Keep the admin user in your app")
+    user
     await db.commit()
-    logger.info(f"User with id {id} deleted - {user.first().name}")
+    logging.info(f"User with id {id} deleted - {user.first().name}")
     return 'User Deleted'
 
 
@@ -69,5 +68,5 @@ async def update_user(id: int, request: schemas.User, db: AsyncSession):
 
     user.update(update_values)
     await db.commit()
-    logger.info(f"User with id {id} updated - {user.first().name}")
+    logging.info(f"User with id {id} updated - {user.first().name}")
     return 'User details updated'

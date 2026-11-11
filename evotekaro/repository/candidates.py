@@ -1,7 +1,5 @@
 import logging
 
-logger = logging.getLogger(__name__)
-
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -19,7 +17,7 @@ async def create(request: schemas.Candidates, db: AsyncSession):
     db.add(new_candidate)
     await db.commit()
     await db.refresh(new_candidate)
-    logger.info(f"New candidate created with id {new_candidate.id} - {new_candidate.name}")
+    logging.info(f"New candidate created with id {new_candidate.id} - {new_candidate.name}")
     return new_candidate
 
 
@@ -43,8 +41,9 @@ async def delete_candidate(id: int, db: AsyncSession):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Candidate with id {id} not found")
 
+    candidate
     await db.commit()
-    logger.info(f"Candidate with id {id} deleted - {candidate.first().name}")
+    logging.info(f"Candidate with id {id} deleted - {candidate.first().name}")
     return 'Candidate Deleted'
 
 
@@ -64,5 +63,5 @@ async def update_candidate(id: int, request: schemas.Candidates, db: AsyncSessio
 
     candidate.update(update_values)
     await db.commit()
-    logger.info(f"Candidate with id {id} updated - {candidate.first().name}")
+    logging.info(f"Candidate with id {id} updated - {candidate.first().name}")
     return 'candidate details updated'

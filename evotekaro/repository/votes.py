@@ -1,6 +1,4 @@
 import logging
-
-logger = logging.getLogger(__name__)
 from datetime import datetime
 
 from fastapi import HTTPException, status
@@ -47,7 +45,7 @@ async def create(request: schemas.Votes, db: AsyncSession, current_user: schemas
 
     # Check if user is trying to vote as different user
     if current_user != request.userId:
-        logger.critical(f"User with id {current_user} is trying to vote for user {user.name}")
+        logging.critical(f"User with id {current_user} is trying to vote for user {user.name}")
         raise HTTPException(status_code=403, detail="User can only vote for themselves")
     
     new_vote = models.Votes(
@@ -58,7 +56,7 @@ async def create(request: schemas.Votes, db: AsyncSession, current_user: schemas
     db.add(new_vote)
     await db.commit()
     await db.refresh(new_vote)
-    logger.info(f"New vote created with id {new_vote.id} by user {user.name} for candidate {candidate.name} in election {election.name}")
+    logging.info(f"New vote created with id {new_vote.id} by user {user.name} for candidate {candidate.name} in election {election.name}")
     return new_vote
 ## not ideal to delete a vote
 ## no need to update a vote also

@@ -10,7 +10,7 @@ from evotekaro import models, schemas
 
 
 async def get_all(db: AsyncSession):
-    election = (await db.execute(select(models.Election))).scalars().all()
+    election = (await db.execute(select(models.Election).options(joinedload(models.Election.candidates)))).unique().scalars().all()
     return election
 
 async def create(request: schemas.Election, db: AsyncSession):
@@ -33,7 +33,7 @@ async def create(request: schemas.Election, db: AsyncSession):
     db.add(new_elec)
     await db.commit()
     await db.refresh(new_elec)
-    election = (await db.execute(select(models.Election).filter(models.Election.id == new_elec.id))).scalars().first()
+    election = (await db.execute(select(models.Election).options(joinedload(models.Election.candidates)).filter(models.Election.id == new_elec.id))).unique().scalars().first()
     logging.info(f"New election created with id {new_elec.id} - {election.name}")
     return election
 
@@ -99,7 +99,7 @@ async def update(id: int, request: schemas.Election, db: AsyncSession):
 
 
 async def show(id: int, db: AsyncSession):
-    election = (await db.execute(select(models.Election).filter(models.Election.id == id))).scalars().first()
+    election = (await db.execute(select(models.Election).options(joinedload(models.Election.candidates)).filter(models.Election.id == id))).unique().scalars().first()
     if not election:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Election with the id {id} is not available")

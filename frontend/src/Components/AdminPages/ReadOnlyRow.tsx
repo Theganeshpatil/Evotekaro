@@ -14,6 +14,7 @@ const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick  }: any) => {
       <td>
         <button
           type="button"
+          aria-label="Edit contact"
           onClick={(event) => handleEditClick(event, contact)}
         >
           <img
@@ -22,7 +23,7 @@ const ReadOnlyRow = ({ contact, handleEditClick, handleDeleteClick  }: any) => {
             style={{ width: "15px", height: "15px" }}
           ></img>
         </button>
-        <button type="button" onClick={() => handleDeleteClick(contact.id)}>
+        <button type="button" aria-label="Delete contact" onClick={() => handleDeleteClick(contact.id)}>
           <img
             src={bin}
             alt="Delete"
